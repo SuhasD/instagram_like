@@ -1,0 +1,15 @@
+{
+  "user": {
+    "name": "Nemo",
+    "imgs": [
+      {
+        "name": "first",
+        "src": "./imgs/1.jpeg"
+      },
+      {
+        "name": "second",
+        "src": "./imgs/2.jpeg"
+      }
+    ]
+  }
+}
