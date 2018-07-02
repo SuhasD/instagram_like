@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import MainPage from '../../components/main-page';
 import ProfilePage from '../../components/profile-page';
-import LoginLogo from './header-decore';
+import { LoginLogo } from './header-decore';
 const AppNavigator = ({}) => {
     return React.createElement(OnBoarding, null);
 };

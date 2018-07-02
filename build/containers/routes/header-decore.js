@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-const LoginLogo = ({ onPress, goBack }) => {
+export const LoginLogo = ({ onPress, goBack }) => {
     return (React.createElement(View, { style: styles.container },
         !onPress
             ? React.createElement(TouchableOpacity, { onPress: goBack, style: styles.touchContainer },
@@ -41,5 +41,4 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     }
 });
-export default LoginLogo;
 //# sourceMappingURL=header-decore.js.map

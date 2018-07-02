@@ -5,7 +5,13 @@ import {
   View
 } from 'react-native';
 
-class AppNavigator extends Component {
+interface IInputState {
+}
+
+interface IInputProps {
+}
+
+class AppNavigator extends Component<IInputProps, IInputState> {
 
   render() {
     return (

@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import MainPage from '../../components/main-page';
 import ProfilePage from '../../components/profile-page';
-import LoginLogo from './header-decore';
+import { LoginLogo } from './header-decore';
 
 const AppNavigator = ({}) => {
     return <OnBoarding />;
@@ -15,7 +15,7 @@ export default AppNavigator;
 export const OnBoarding = createStackNavigator({
     main: {
         screen: MainPage,
-        navigationOptions: ({ navigation }) => ({
+        navigationOptions: ({ navigation }: any) => ({
             header: <LoginLogo onPress={() => navigation.navigate('profile')}  />,
             ...headerView
         })
