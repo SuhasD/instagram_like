@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import AppNavigator from './containers/routes';
 export default class App extends Component {
     render() {
-        return (React.createElement(View, { style: styles.container },
-            React.createElement(Text, null, "Open!!"),
-            React.createElement(Text, null, "Changes you make will automatically reload."),
-            React.createElement(Text, null, "Shake your phone to open the developer menu.")));
+        return (React.createElement(AppNavigator, null));
     }
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
 //# sourceMappingURL=App.js.map
