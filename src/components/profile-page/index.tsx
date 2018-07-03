@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   Image,
   Dimensions
 } from 'react-native';
+
 import { FormInput, Button } from 'react-native-elements';
 import incoming from '../../../backend/incoming.json';
 import { ModalPhotoGallery } from '../main-page/new-photo/modal';
+import { getUserData } from '../../api';
 
 const { width } = Dimensions.get('window');
 
@@ -31,9 +32,15 @@ class AppNavigator extends Component<IInputProps, IInputState>  {
     avatar: ''
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const {user: {avatar, name}} = incoming;
     this.setState({avatar, name, avatarName: name});
+
+    const querySnapshot = await getUserData();
+
+    querySnapshot.forEach(doc => {
+      console.log(doc.data());
+    });
   }
 
   openModal = () => this.setState({modalVisible: true});

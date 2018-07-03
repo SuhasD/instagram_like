@@ -1,8 +1,17 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { FormInput, Button } from 'react-native-elements';
 import incoming from '../../../backend/incoming.json';
 import { ModalPhotoGallery } from '../main-page/new-photo/modal';
+import { getUserData } from '../../api';
 const { width } = Dimensions.get('window');
 class AppNavigator extends Component {
     constructor() {
@@ -26,8 +35,14 @@ class AppNavigator extends Component {
         };
     }
     componentDidMount() {
-        const { user: { avatar, name } } = incoming;
-        this.setState({ avatar, name, avatarName: name });
+        return __awaiter(this, void 0, void 0, function* () {
+            const { user: { avatar, name } } = incoming;
+            this.setState({ avatar, name, avatarName: name });
+            const querySnapshot = yield getUserData();
+            querySnapshot.forEach(doc => {
+                console.log(doc.data());
+            });
+        });
     }
     render() {
         const { modalVisible } = this.state;
