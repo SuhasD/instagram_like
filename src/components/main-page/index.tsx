@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
-  TouchableOpacity,
-  Image
+  ScrollView
 } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+// import { FontAwesome } from '@expo/vector-icons';
 
 import incoming from '../../../backend/incoming.json';
+import { ImageItem } from './image-item';
+import { NewPhoto } from './new-photo';
 
 interface IInputState {
 }
@@ -22,35 +22,25 @@ class AppNavigator extends Component<IInputProps, IInputState> {
     console.log('new Photo here...');
   }
 
+  getImgs = (arrImgs: any) => (
+    arrImgs.map(item => (
+      <ImageItem
+        key={item.name}
+        item={item} />
+    ))
+  )
+
   render() {
-    console.log('incoming', incoming);
+    const serverArrImgs = incoming ? incoming.user.imgs : [];
+    const renderImgs = this.getImgs(serverArrImgs);
+
     return (
-      <View style = { styles.container } >
-        {
-          incoming.user.imgs.map(item => (
-            <View key={item.name}>
-              <Image
-                source={{uri: item.src}}
-                style={{
-                  width: 100,
-                  height: 100
-                }} />
-                <Text>{item.name}</Text>
-            </View>
-          ))
-        }
-         <Text>Main</Text>
-
-         <TouchableOpacity
-           onPress={this.addNewPhoto}
-           style={styles.touchContainer}>
-           <Text style={styles.iconView}>
-             <FontAwesome
-               name={'plus-circle'}
-               size={60} />
-           </Text>;
-         </TouchableOpacity>
-
+      <View style={styles.container} >
+        <ScrollView>
+          { renderImgs }
+        </ScrollView>
+        <NewPhoto
+          onPress={this.addNewPhoto} />
       </View>
     );
   }
@@ -65,15 +55,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  touchContainer: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    backgroundColor: 'transparent'
-  },
-  iconView: {
-    margin: 10,
-    color: 'blue'
   }
 });

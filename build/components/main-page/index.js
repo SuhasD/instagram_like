@@ -1,28 +1,23 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { StyleSheet, View, ScrollView } from 'react-native';
+// import { FontAwesome } from '@expo/vector-icons';
 import incoming from '../../../backend/incoming.json';
+import { ImageItem } from './image-item';
+import { NewPhoto } from './new-photo';
 class AppNavigator extends Component {
     constructor() {
         super(...arguments);
         this.addNewPhoto = () => {
             console.log('new Photo here...');
         };
+        this.getImgs = (arrImgs) => (arrImgs.map(item => (React.createElement(ImageItem, { key: item.name, item: item }))));
     }
     render() {
-        console.log('incoming', incoming);
+        const serverArrImgs = incoming ? incoming.user.imgs : [];
+        const renderImgs = this.getImgs(serverArrImgs);
         return (React.createElement(View, { style: styles.container },
-            incoming.user.imgs.map(item => (React.createElement(View, { key: item.name },
-                React.createElement(Image, { source: { uri: item.src }, style: {
-                        width: 100,
-                        height: 100
-                    } }),
-                React.createElement(Text, null, item.name)))),
-            React.createElement(Text, null, "Main"),
-            React.createElement(TouchableOpacity, { onPress: this.addNewPhoto, style: styles.touchContainer },
-                React.createElement(Text, { style: styles.iconView },
-                    React.createElement(FontAwesome, { name: 'plus-circle', size: 60 })),
-                ";")));
+            React.createElement(ScrollView, null, renderImgs),
+            React.createElement(NewPhoto, { onPress: this.addNewPhoto })));
     }
 }
 export default AppNavigator;
@@ -32,16 +27,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    touchContainer: {
-        position: 'absolute',
-        bottom: 10,
-        right: 10,
-        backgroundColor: 'transparent'
-    },
-    iconView: {
-        margin: 10,
-        color: 'blue'
     }
 });
 //# sourceMappingURL=index.js.map
