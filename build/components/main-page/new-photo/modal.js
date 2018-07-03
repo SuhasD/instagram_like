@@ -58,7 +58,7 @@ export const ModalPhotoGallery = ({ closeModal, modalVisible, getNewPicture }) =
                     React.createElement(FontAwesome, { name: 'times-circle', size: 30 }))),
             React.createElement(Text, null, "Make a choice..."),
             React.createElement(View, { style: styles.buttons },
-                React.createElement(Button, { onPress: () => getPhoto({ getNewPicture, closeModal }), buttonStyle: styles.photoButton, raised: true, icon: { name: 'camera-alt' }, title: 'Make Photo' }),
+                React.createElement(Button, { onPress: () => getPhoto({ getNewPicture, closeModal }), buttonStyle: styles.photoButton, raised: true, icon: { name: 'camera-alt' }, title: 'Take a Photo' }),
                 React.createElement(Button, { onPress: () => getFromGalery({ getNewPicture, closeModal }), buttonStyle: styles.galleryButton, raised: true, icon: { name: 'insert-photo' }, title: 'Get from Gallery' }))))));
 const styles = StyleSheet.create({
     modalContainer: {

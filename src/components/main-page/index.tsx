@@ -11,6 +11,7 @@ import { NewPhotoButton } from './new-photo';
 import { ModalPhotoGallery } from './new-photo/modal';
 
 interface IInputState {
+  modalVisible: boolean
 }
 
 interface IInputProps {

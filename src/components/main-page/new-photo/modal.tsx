@@ -91,7 +91,7 @@ export const ModalPhotoGallery = ({
           buttonStyle={styles.photoButton}
           raised
           icon={{name: 'camera-alt'}}
-          title='Make Photo' />
+          title='Take a Photo' />
         <Button
           onPress={() => getFromGalery({getNewPicture, closeModal})}
           buttonStyle={styles.galleryButton}

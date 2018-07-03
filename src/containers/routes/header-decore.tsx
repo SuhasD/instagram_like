@@ -3,9 +3,11 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import incoming from '../../../backend/incoming.json';
 
 export const LoginLogo = ({
     onPress,
@@ -33,11 +35,19 @@ export const LoginLogo = ({
         ? <TouchableOpacity
           onPress={onPress}
           style={styles.touchContainer}>
-          <Text style={styles.iconView}>
-            <FontAwesome
-              name={'user-circle'}
-              size={30} />
-          </Text>
+          {incoming
+            ? <View>
+              <Image
+                source={{uri: incoming.user.avatar}}
+                style={styles.avatar} />
+              <Text>{incoming.user.name}</Text>
+            </View>
+            : <Text style={styles.iconView}>
+              <FontAwesome
+                name={'user-circle'}
+                size={30} />
+              </Text>
+          }
         </TouchableOpacity>
         : <View style={styles.emptyContainer} />
       }
@@ -67,5 +77,10 @@ const styles = StyleSheet.create({
   mainLogo: {
     flex: 0.7,
     textAlign: 'center'
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20
   }
 });

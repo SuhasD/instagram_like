@@ -1,30 +1,31 @@
 {
   "user": {
     "name": "Nemo",
+    "avatar": "http://2.bp.blogspot.com/-hkGjLeIt3sc/UmbvOIPEg-I/AAAAAAAARUw/Aw9g7AqFSUs/s1600/505.jpg",
     "imgs": [
       {
         "name": "first",
-        "src": "./imgs/1.jpeg"
+        "src": "http://www.pitodoble.com/imagenes/nemo.jpg"
       },
       {
         "name": "second",
-        "src": "./imgs/2.jpeg"
+        "src": "http://www.pitodoble.com/imagenes/nemo.jpg"
       },
       {
         "name": "second33",
-        "src": "./imgs/2.jpeg"
+        "src": "http://www.pitodoble.com/imagenes/nemo.jpg"
       },
       {
         "name": "second44",
-        "src": "./imgs/2.jpeg"
+        "src": "http://www.pitodoble.com/imagenes/nemo.jpg"
       },
       {
         "name": "second55",
-        "src": "./imgs/2.jpeg"
+        "src": "http://www.pitodoble.com/imagenes/nemo.jpg"
       },
       {
         "name": "second66",
-        "src": "./imgs/2.jpeg"
+        "src": "http://www.pitodoble.com/imagenes/nemo.jpg"
       }
     ]
   }
