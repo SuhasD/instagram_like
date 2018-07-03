@@ -1,5 +1,31 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "name": "Insta like...",
+    "description": "This project is really great.",
+    "slug": "InstaLike",
+    "privacy": "public",
+    "platforms": ["ios", "android"],
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.avocadotechnology.jobypepper",
+      "permissions": [
+        "CAMERA",
+        "CAMERA_ROLL",
+        "MANAGE_DOCUMENTS",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_INTERNAL_STORAGE",
+        "WRITE_INTERNAL_STORAGE",
+        "CHANGE_CONFIGURATION",
+        "com.google.android.c2dm.permission.RECEIVE",
+        "com.android.launcher.permission.INSTALL_SHORTCUT",
+        "com.htc.launcher.permission.UPDATE_SHORTCUT"
+      ]
+    }
   }
 }

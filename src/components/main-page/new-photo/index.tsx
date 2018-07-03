@@ -6,11 +6,11 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-export const NewPhoto = ({
-  onPress
+export const NewPhotoButton = ({
+  openModal
 }) => (
   <TouchableOpacity
-    onPress={onPress}
+    onPress={openModal}
     style={styles.touchContainer}>
     <Text style={styles.iconView}>
       <FontAwesome

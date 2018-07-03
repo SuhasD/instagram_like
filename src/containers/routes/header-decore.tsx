@@ -21,7 +21,7 @@ export const LoginLogo = ({
               <FontAwesome
                 name={'arrow-left'}
                 size={20} />
-            </Text>;
+            </Text>
           </TouchableOpacity>
           : <View style={styles.emptyContainer} />
         }
@@ -29,7 +29,7 @@ export const LoginLogo = ({
       <Text style={styles.mainLogo}>
         Instagram Like...
       </Text>
-      {onPress
+      {!!onPress
         ? <TouchableOpacity
           onPress={onPress}
           style={styles.touchContainer}>
@@ -37,7 +37,7 @@ export const LoginLogo = ({
             <FontAwesome
               name={'user-circle'}
               size={30} />
-          </Text>;
+          </Text>
         </TouchableOpacity>
         : <View style={styles.emptyContainer} />
       }

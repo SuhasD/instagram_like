@@ -6,15 +6,13 @@ export const LoginLogo = ({ onPress, goBack }) => {
         !onPress
             ? React.createElement(TouchableOpacity, { onPress: goBack, style: styles.touchContainer },
                 React.createElement(Text, { style: styles.iconView },
-                    React.createElement(FontAwesome, { name: 'arrow-left', size: 20 })),
-                ";")
+                    React.createElement(FontAwesome, { name: 'arrow-left', size: 20 })))
             : React.createElement(View, { style: styles.emptyContainer }),
         React.createElement(Text, { style: styles.mainLogo }, "Instagram Like..."),
-        onPress
+        !!onPress
             ? React.createElement(TouchableOpacity, { onPress: onPress, style: styles.touchContainer },
                 React.createElement(Text, { style: styles.iconView },
-                    React.createElement(FontAwesome, { name: 'user-circle', size: 30 })),
-                ";")
+                    React.createElement(FontAwesome, { name: 'user-circle', size: 30 })))
             : React.createElement(View, { style: styles.emptyContainer })));
 };
 const styles = StyleSheet.create({

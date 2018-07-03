@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-export const NewPhoto = ({ onPress }) => (React.createElement(TouchableOpacity, { onPress: onPress, style: styles.touchContainer },
+export const NewPhotoButton = ({ openModal }) => (React.createElement(TouchableOpacity, { onPress: openModal, style: styles.touchContainer },
     React.createElement(Text, { style: styles.iconView },
         React.createElement(FontAwesome, { name: 'plus-circle', size: 60 }))));
 const styles = StyleSheet.create({
