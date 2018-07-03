@@ -14,7 +14,7 @@ export const ImageItem = ({
 }) => (
   <View>
     <Image
-      source={{uri: 'http://www.pitodoble.com/imagenes/nemo.jpg'}}
+      source={{uri: item.src}}
       style={styles.imageStyle} />
       <Text>{item.name}</Text>
     </View>
