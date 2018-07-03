@@ -7,10 +7,10 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const LoginLogo = ({
+export const LoginLogo = ({
     onPress,
     goBack
-}) => {
+}: {onPress?: () => void, goBack?: () => void}) => {
     return (
       <View style={styles.container} >
         {!onPress
@@ -21,7 +21,7 @@ const LoginLogo = ({
               <FontAwesome
                 name={'arrow-left'}
                 size={20} />
-            </Text>;
+            </Text>
           </TouchableOpacity>
           : <View style={styles.emptyContainer} />
         }
@@ -29,7 +29,7 @@ const LoginLogo = ({
       <Text style={styles.mainLogo}>
         Instagram Like...
       </Text>
-      {onPress
+      {!!onPress
         ? <TouchableOpacity
           onPress={onPress}
           style={styles.touchContainer}>
@@ -37,13 +37,13 @@ const LoginLogo = ({
             <FontAwesome
               name={'user-circle'}
               size={30} />
-          </Text>;
+          </Text>
         </TouchableOpacity>
         : <View style={styles.emptyContainer} />
       }
-      </View > ;
-    )
-}
+      </View >
+    );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -69,5 +69,3 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
-
-export default LoginLogo;
