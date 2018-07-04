@@ -5,13 +5,21 @@ import {
   ScrollView
 } from 'react-native';
 
-import incoming from '../../../backend/incoming.json';
 import { ImageItem } from './image-item';
 import { NewPhotoButton } from './new-photo';
 import { ModalPhotoGallery } from './new-photo/modal';
+import {
+  updateImageCollection,
+  getUserImgs
+} from '../../api';
+import { LoaderComponent } from '../loader';
+import { color } from '../constants';
 
 interface IInputState {
-  modalVisible: boolean
+  modalVisible: boolean,
+  loader: boolean,
+  id: any,
+  imgs: {name: string, src: string}[]
 }
 
 interface IInputProps {
@@ -19,8 +27,28 @@ interface IInputProps {
 
 class AppNavigator extends Component<IInputProps, IInputState> {
   state = {
-    modalVisible: false
+    modalVisible: false,
+    loader: false,
+    id: '',
+    imgs: []
   };
+
+  componentDidMount() {
+    this.loadInfo();
+  }
+
+  loadInfo = async () => { // it's bad practice make logic to get info from server inside component, usually I use redux-saga
+    this.setState({ loader: true });
+    const querySnapshot = await getUserImgs();
+    const imgs = [];
+    const id = [];
+    querySnapshot.forEach(doc => {
+      imgs.push(doc.data());
+      id.push(doc.id);
+    });
+
+    this.setState({ loader: false, imgs, id });
+  }
 
   addNewPhoto = () => {
     console.log('new Photo here...');
@@ -29,8 +57,8 @@ class AppNavigator extends Component<IInputProps, IInputState> {
   getImgs = (arrImgs: any) => (
     arrImgs.map(item => (
       <ImageItem
-        key={item.name}
-        item={item} />
+        key={item.imgs.name}
+        item={item.imgs} />
     ))
   )
 
@@ -38,23 +66,32 @@ class AppNavigator extends Component<IInputProps, IInputState> {
 
   closeModal = () => this.setState({modalVisible: false});
 
-  getNewPicture = ({preparedImg, name}: {preparedImg: string, name: string}) => {
-    console.log('picture', name, preparedImg);
-    // sendToServer({preparedImg, name});
+  getNewPicture = async ({preparedImg, name}: {preparedImg: string, name: string}) => {
+    const imgs = {name, src: preparedImg};
+    this.setState({ loader: true });
+    await updateImageCollection({ imgs });
+
+    this.setState({ loader: false });
+    this.loadInfo();
   }
 
   render() {
-    const { modalVisible } = this.state;
-    const serverArrImgs = incoming ? incoming.user.imgs : [];
+    const { modalVisible, imgs, loader} = this.state;
+    const serverArrImgs = imgs;
     const renderImgs = this.getImgs(serverArrImgs);
 
     return (
       <View style={styles.container} >
-        <ScrollView>
-          { renderImgs }
-        </ScrollView>
-        <NewPhotoButton
-          openModal={this.openModal} />
+        {loader
+          ? <LoaderComponent />
+          : <ScrollView>
+              { renderImgs }
+            </ScrollView>
+          }
+        {!loader &&
+          <NewPhotoButton
+            openModal={this.openModal} />
+        }
         <ModalPhotoGallery
           closeModal={this.closeModal}
           modalVisible={modalVisible}
@@ -69,9 +106,9 @@ class AppNavigator extends Component<IInputProps, IInputState> {
 export default AppNavigator;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  container:  {
+    flex:  1,
+    backgroundColor: color.first,
     alignItems: 'center',
     justifyContent: 'center'
   }

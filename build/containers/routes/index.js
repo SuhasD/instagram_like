@@ -24,13 +24,10 @@ const styles = StyleSheet.create({
         padding: 0,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#ffffff'
+        justifyContent: 'center'
     },
     headerStyle: {
-        marginTop: 20,
-        backgroundColor: '#ffffff',
-        shadowColor: '#ffffff'
+        marginTop: 20
     }
 });
 const headerView = {

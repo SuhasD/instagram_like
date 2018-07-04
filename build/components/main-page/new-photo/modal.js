@@ -11,6 +11,7 @@ import { View, TouchableOpacity, Text, Modal, StyleSheet, Dimensions, Alert } fr
 import { Button } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
 import { ImagePicker, Permissions } from 'expo';
+import { color } from '../../constants';
 const { width } = Dimensions.get('window');
 const getPhoto = ({ getNewPicture, closeModal }) => __awaiter(this, void 0, void 0, function* () {
     const result = yield Promise.all([
@@ -23,7 +24,8 @@ const getPhoto = ({ getNewPicture, closeModal }) => __awaiter(this, void 0, void
     }
     closeModal();
     const { cancelled, base64, uri } = yield ImagePicker.launchCameraAsync({
-        base64: true
+        base64: true,
+        quality: 0
     });
     if (!cancelled) {
         const preparedImg = `data:image/jpeg;base64,${base64}`;
@@ -41,7 +43,8 @@ const getFromGalery = ({ getNewPicture, closeModal }) => __awaiter(this, void 0,
         return;
     }
     const { cancelled, base64, uri } = yield ImagePicker.launchImageLibraryAsync({
-        base64: true
+        base64: true,
+        quality: 0
     });
     closeModal();
     if (!cancelled) {
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#ffffff'
+        backgroundColor: color.first
     },
     innerContainer: {
         width,
@@ -75,18 +78,18 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     iconView: {
-        color: 'black'
+        color: color.third
     },
     buttons: {
         flexDirection: 'row',
         padding: 20
     },
     photoButton: {
-        backgroundColor: 'red',
+        backgroundColor: color.third,
         borderRadius: 6
     },
     galleryButton: {
-        backgroundColor: 'green',
+        backgroundColor: color.fourth,
         borderRadius: 6
     }
 });

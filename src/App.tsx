@@ -5,7 +5,7 @@ import AppNavigator from './containers/routes';
 export default class App extends Component {
   render() {
     return (
-      <AppNavigator />
+      <AppNavigator /> // router component
     );
   }
 }

@@ -18,10 +18,28 @@ export const getUserData = () => __awaiter(this, void 0, void 0, function* () {
     initialDB();
     const result = yield db.collection('user').get();
     return result;
-    // .then((querySnapshot) => {
-    //   querySnapshot.forEach((doc) => {
-    //     console.log(doc.data());
-    //   });
-    // });
+});
+export const getUserImgs = () => __awaiter(this, void 0, void 0, function* () {
+    initialDB();
+    const result = yield db.collection('userImgs').get();
+    return result;
+});
+export const updateNameAndAvatar = ({ id, name, avatar }) => __awaiter(this, void 0, void 0, function* () {
+    if (name) {
+        yield db.collection('user').doc(id).update({
+            name
+        });
+    }
+    else {
+        yield db.collection('user').doc(id).update({
+            avatar
+        });
+    }
+});
+export const updateImageCollection = ({ imgs }) => __awaiter(this, void 0, void 0, function* () {
+    yield db.collection('userImgs').add({
+        imgs
+    });
+    return 'end';
 });
 //# sourceMappingURL=index.js.map

@@ -4,13 +4,16 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
+  Text
 } from 'react-native';
 
 import { FormInput, Button } from 'react-native-elements';
-import incoming from '../../../backend/incoming.json';
+import { FontAwesome } from '@expo/vector-icons';
 import { ModalPhotoGallery } from '../main-page/new-photo/modal';
-import { getUserData } from '../../api';
+import { getUserData, updateNameAndAvatar } from '../../api';
+import { LoaderComponent } from '../loader';
+import { color } from '../constants';
 
 const { width } = Dimensions.get('window');
 
@@ -18,7 +21,9 @@ interface IInputState {
   modalVisible: boolean,
   name: string,
   avatarName: string,
-  avatar: string
+  avatar: string,
+  loader: boolean,
+  id: any
 }
 
 interface IInputProps {
@@ -29,62 +34,86 @@ class AppNavigator extends Component<IInputProps, IInputState>  {
     modalVisible: false,
     name: '',
     avatarName: '',
-    avatar: ''
+    avatar: '',
+    loader: false,
+    id: ''
   };
 
-  async componentDidMount() {
-    const {user: {avatar, name}} = incoming;
-    this.setState({avatar, name, avatarName: name});
+  componentDidMount() {
+    this.loadInfo();
+  }
 
+  loadInfo = async () => { // it's bad practice make logic to get info from server inside component, usually I use redux-saga
+    this.setState({ loader: true });
     const querySnapshot = await getUserData();
-
+    const arr = [];
+    const docId = [];
     querySnapshot.forEach(doc => {
-      console.log(doc.data());
+      arr.push(doc.data());
+      docId.push(doc.id);
     });
+
+    const { avatar, name } = arr[0];
+    const id = docId[0];
+    this.setState({ loader: false, avatar, name, id });
   }
 
   openModal = () => this.setState({modalVisible: true});
 
   closeModal = () => this.setState({modalVisible: false});
 
-  getNewPicture = ({preparedImg, name}: {preparedImg: string, name: string}) => {
-    this.setState({avatarName: name, avatar: preparedImg});
-    // sendToServer({preparedImg, name});
+  getNewPicture = async ({preparedImg, name}: {preparedImg: string, name: string}) => {
+    const { id } = this.state;
+    this.setState({ loader: true, avatarName: name, avatar: preparedImg });
+                          // it's bad practice make logic to get info from server inside component, usually I use redux-saga
+    await updateNameAndAvatar({ id, avatar: preparedImg, name: '' });
+    this.setState({ loader: false });
   }
 
   onChange = (name: string) => this.setState({name});
 
   saveName = () => {
-    const { name } = this.state;
-    console.log('name', name);
+    const { name, id } = this.state;
+    updateNameAndAvatar({ id, name, avatar: '' });
   }
 
   render() {
-    const { modalVisible } = this.state;
-    const {user: {avatar, name}} = incoming;
+    const { modalVisible, loader, avatar, name } = this.state;
 
     return (
-      <View style={styles.container} >
-        <TouchableOpacity
-            onPress={this.openModal} >
-            <Image
-              source={{uri: avatar}}
-              style={styles.avatar} />
-          </TouchableOpacity>
-          <FormInput
-            containerStyle={styles.inputForm}
-            value={name}
-            onChangeText={this.onChange}/>
-          <Button
-            onPress={this.saveName}
-            buttonStyle={styles.galleryButton}
-            raised
-            title='Save Name' />
-         <ModalPhotoGallery
-           closeModal={this.closeModal}
-           modalVisible={modalVisible}
-           getNewPicture={this.getNewPicture}
-         />
+      <View style={styles.mainContainer}>
+        {loader
+          ? <LoaderComponent />
+          : <View style={styles.container} >
+            {!!avatar
+              ? <TouchableOpacity
+                onPress={this.openModal} >
+                <Image
+                  source={{uri: avatar}}
+                  style={styles.avatar} />
+                </TouchableOpacity>
+              : <Text style={styles.avatarEmpty}>
+                  <FontAwesome
+                    name={'image'}
+                    size={250} />
+                </Text>
+            }
+            <FormInput
+              containerStyle={styles.inputForm}
+              value={name}
+              onChangeText={this.onChange}/>
+            <Button
+              onPress={this.saveName}
+              buttonStyle={styles.galleryButton}
+              raised
+              title='Save Name' />
+            <ModalPhotoGallery
+              closeModal={this.closeModal}
+              modalVisible={modalVisible}
+              getNewPicture={this.getNewPicture}
+            />
+          </View>
+        }
       </View>
     );
   }
@@ -94,9 +123,12 @@ class AppNavigator extends Component<IInputProps, IInputState>  {
 export default AppNavigator;
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: color.first,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20
@@ -106,11 +138,18 @@ const styles = StyleSheet.create({
     height: width * 0.8,
     marginBottom: 20
   },
+  avatarEmpty: {
+    width: width * 0.8,
+    height: width * 0.8,
+    marginBottom: 20,
+    textAlign: 'center',
+    color: color.second
+  },
   inputForm: {
     width: width * 0.8
   },
   galleryButton: {
-    backgroundColor: 'green',
+    backgroundColor: color.third,
     borderRadius: 6,
     marginTop: 20
   }

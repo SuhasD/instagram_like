@@ -5,6 +5,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { color } from '../../constants';
 
 export const NewPhotoButton = ({
   openModal
@@ -29,6 +30,6 @@ const styles = StyleSheet.create({
   },
   iconView: {
     margin: 10,
-    color: 'blue'
+    color: color.fourth
   }
 });
