@@ -3,13 +3,12 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  Image
+  StyleSheet
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import incoming from '../../../backend/incoming.json';
+import { color } from '../../components/constants';
 
-export const LoginLogo = ({
+export const LoginLogo = ({ // header view component
     onPress,
     goBack
 }: {onPress?: () => void, goBack?: () => void}) => {
@@ -35,19 +34,11 @@ export const LoginLogo = ({
         ? <TouchableOpacity
           onPress={onPress}
           style={styles.touchContainer}>
-          {incoming
-            ? <View>
-              <Image
-                source={{uri: incoming.user.avatar}}
-                style={styles.avatar} />
-              <Text>{incoming.user.name}</Text>
-            </View>
-            : <Text style={styles.iconView}>
-              <FontAwesome
-                name={'user-circle'}
-                size={30} />
-              </Text>
-          }
+          <Text style={styles.iconView}>
+            <FontAwesome
+              name={'user-circle'}
+              size={30} />
+          </Text>
         </TouchableOpacity>
         : <View style={styles.emptyContainer} />
       }
@@ -59,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     height: 60,
-    backgroundColor: 'pink',
+    backgroundColor: color.second,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
@@ -69,7 +60,7 @@ const styles = StyleSheet.create({
   },
   iconView: {
     margin: 10,
-    color: 'black'
+    color: color.third
   },
   emptyContainer: {
     flex: 0.15

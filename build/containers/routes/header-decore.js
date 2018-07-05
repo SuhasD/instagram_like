@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import incoming from '../../../backend/incoming.json';
-export const LoginLogo = ({ onPress, goBack }) => {
+import { color } from '../../components/constants';
+export const LoginLogo = ({ // header view component
+onPress, goBack }) => {
     return (React.createElement(View, { style: styles.container },
         !onPress
             ? React.createElement(TouchableOpacity, { onPress: goBack, style: styles.touchContainer },
@@ -11,11 +12,8 @@ export const LoginLogo = ({ onPress, goBack }) => {
             : React.createElement(View, { style: styles.emptyContainer }),
         React.createElement(Text, { style: styles.mainLogo }, "Instagram Like..."),
         !!onPress
-            ? React.createElement(TouchableOpacity, { onPress: onPress, style: styles.touchContainer }, incoming
-                ? React.createElement(View, null,
-                    React.createElement(Image, { source: { uri: incoming.user.avatar }, style: styles.avatar }),
-                    React.createElement(Text, null, incoming.user.name))
-                : React.createElement(Text, { style: styles.iconView },
+            ? React.createElement(TouchableOpacity, { onPress: onPress, style: styles.touchContainer },
+                React.createElement(Text, { style: styles.iconView },
                     React.createElement(FontAwesome, { name: 'user-circle', size: 30 })))
             : React.createElement(View, { style: styles.emptyContainer })));
 };
@@ -23,7 +21,7 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 20,
         height: 60,
-        backgroundColor: 'pink',
+        backgroundColor: color.second,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
@@ -33,7 +31,7 @@ const styles = StyleSheet.create({
     },
     iconView: {
         margin: 10,
-        color: 'black'
+        color: color.third
     },
     emptyContainer: {
         flex: 0.15

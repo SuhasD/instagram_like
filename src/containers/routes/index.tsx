@@ -12,7 +12,7 @@ const AppNavigator = ({}) => {
 
 export default AppNavigator;
 
-export const OnBoarding = createStackNavigator({
+export const OnBoarding = createStackNavigator({ // setup pages from menu
     main: {
         screen: MainPage,
         navigationOptions: ({ navigation }: any) => ({
@@ -35,13 +35,10 @@ headerTitleStyle: {
     padding: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff'
+    justifyContent: 'center'
   },
   headerStyle: {
-    marginTop: 20,
-    backgroundColor: '#ffffff',
-    shadowColor: '#ffffff'
+    marginTop: 20
   }
 });
 

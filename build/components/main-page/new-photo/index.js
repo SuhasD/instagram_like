@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-export const NewPhotoButton = ({ openModal }) => (React.createElement(TouchableOpacity, { onPress: openModal, style: styles.touchContainer },
+import { color } from '../../constants';
+export const NewPhotoButton = ({ // button to add new image to user collection(open modal photo/gallery)
+openModal }) => (React.createElement(TouchableOpacity, { onPress: openModal, style: styles.touchContainer },
     React.createElement(Text, { style: styles.iconView },
         React.createElement(FontAwesome, { name: 'plus-circle', size: 60 }))));
 const styles = StyleSheet.create({
@@ -13,7 +15,7 @@ const styles = StyleSheet.create({
     },
     iconView: {
         margin: 10,
-        color: 'blue'
+        color: color.fourth
     }
 });
 //# sourceMappingURL=index.js.map
