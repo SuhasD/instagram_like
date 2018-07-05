@@ -6,7 +6,7 @@ import MainPage from '../../components/main-page';
 import ProfilePage from '../../components/profile-page';
 import { LoginLogo } from './header-decore';
 
-const AppNavigator = ({}) => {
+const AppNavigator = () => {
     return <OnBoarding />;
 };
 
