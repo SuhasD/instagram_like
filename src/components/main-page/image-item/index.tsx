@@ -10,7 +10,7 @@ import { color } from '../../constants';
 
 const { width } = Dimensions.get('window');
 
-export const ImageItem = ({
+export const ImageItem = ({ // single image view
   item
 }) => (
   <View style={styles.container}>

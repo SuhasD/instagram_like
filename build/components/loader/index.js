@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-export const LoaderComponent = () => (React.createElement(View, { style: [styles.containerLoader, styles.horizontalLoader] },
+export const LoaderComponent = () => ( // loader view component
+React.createElement(View, { style: [styles.containerLoader, styles.horizontalLoader] },
     React.createElement(ActivityIndicator, { size: 'large' })));
 const styles = StyleSheet.create({
     containerLoader: {

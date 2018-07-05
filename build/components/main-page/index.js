@@ -21,7 +21,7 @@ class AppNavigator extends Component {
             modalVisible: false,
             loader: false,
             id: '',
-            imgs: []
+            imgs: [] // user image collection
         };
         this.loadInfo = () => __awaiter(this, void 0, void 0, function* () {
             this.setState({ loader: true });
@@ -34,13 +34,12 @@ class AppNavigator extends Component {
             });
             this.setState({ loader: false, imgs, id });
         });
-        this.addNewPhoto = () => {
-            console.log('new Photo here...');
-        };
-        this.getImgs = (arrImgs) => (arrImgs.map(item => (React.createElement(ImageItem, { key: item.imgs.name, item: item.imgs }))));
+        this.getImgs = (arrImgs) => ( // list of user image
+        arrImgs.map(item => (React.createElement(ImageItem, { key: item.imgs.name, item: item.imgs }))));
         this.openModal = () => this.setState({ modalVisible: true });
         this.closeModal = () => this.setState({ modalVisible: false });
         this.getNewPicture = ({ preparedImg, name }) => __awaiter(this, void 0, void 0, function* () {
+            /* function to get new image from user device */
             const imgs = { name, src: preparedImg };
             this.setState({ loader: true });
             yield updateImageCollection({ imgs });
@@ -49,6 +48,8 @@ class AppNavigator extends Component {
         });
     }
     componentDidMount() {
+        /* get user image collection from server
+         !!! it's bad practice make logic to get info from server inside component, usually I use redux-saga */
         this.loadInfo();
     }
     render() {

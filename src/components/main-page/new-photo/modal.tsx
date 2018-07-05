@@ -13,16 +13,18 @@ import { FontAwesome } from '@expo/vector-icons';
 import { ImagePicker, Permissions } from 'expo';
 import { color } from '../../constants';
 
+// this is modal window (ask photo or gallery) and two function work with camera user and gallery user
+
 const { width } = Dimensions.get('window');
 
-const getPhoto = async ({getNewPicture, closeModal}:
+const getPhoto = async ({getNewPicture, closeModal}: // async function to get photo from camera
   {getNewPicture: any, closeModal: () => void}) => {
   const result = await Promise.all([
-    Permissions.askAsync(Permissions.CAMERA),
-    Permissions.askAsync(Permissions.CAMERA_ROLL)
+    Permissions.askAsync(Permissions.CAMERA), // ask permission
+    Permissions.askAsync(Permissions.CAMERA_ROLL) // ask permission
   ]);
   if (result.some(({ status }) => status !== 'granted')) {
-    Alert.alert('Camera & Camera Roll Permissions Required');
+    Alert.alert('Camera & Camera Roll Permissions Required'); // if permission deny
     return;
   }
   closeModal();
@@ -31,24 +33,24 @@ const getPhoto = async ({getNewPicture, closeModal}:
       base64,
       uri
   } = await ImagePicker.launchCameraAsync({
-      base64: true,
-      quality: 0
+      base64: true, // use base64 format to image
+      quality: 0 // use low quality to save memory on server and fast connection
   } as any) as any;
   if (!cancelled) {
       const preparedImg = `data:image/jpeg;base64,${base64}`;
       const name = uri.split('/').pop();
-      getNewPicture({preparedImg, name});
+      getNewPicture({preparedImg, name}); // send image to parent component
   }
   };
 
-  const getFromGalery = async ({getNewPicture, closeModal}:
+  const getFromGalery = async ({getNewPicture, closeModal}: // async function to get image from gallery
     {getNewPicture: any, closeModal: () => void}) => {
     const result = await Promise.all([
-      Permissions.askAsync(Permissions.CAMERA),
-      Permissions.askAsync(Permissions.CAMERA_ROLL)
+      Permissions.askAsync(Permissions.CAMERA), // ask permission
+      Permissions.askAsync(Permissions.CAMERA_ROLL) // ask permission
     ]);
     if (result.some(({ status }) => status !== 'granted')) {
-      Alert.alert('Camera & Camera Roll Permissions Required');
+      Alert.alert('Gallery Permissions Required'); // if permission deny
       return;
     }
       const {
@@ -56,14 +58,14 @@ const getPhoto = async ({getNewPicture, closeModal}:
           base64,
           uri
       } = await ImagePicker.launchImageLibraryAsync({
-          base64: true,
-          quality: 0
+          base64: true, // use base64 format to image
+          quality: 0 // use low quality to save memory on server and fast connection
       }) as any;
       closeModal();
       if (!cancelled) {
           const preparedImg = `data:image/jpeg;base64,${base64}`;
           const name = uri.split('/').pop();
-          getNewPicture({preparedImg, name});
+          getNewPicture({preparedImg, name}); // send image to parent component
       }
   };
 
@@ -92,12 +94,14 @@ export const ModalPhotoGallery = ({
         <Button
           onPress={() => getPhoto({getNewPicture, closeModal})}
           buttonStyle={styles.photoButton}
+          containerViewStyle={styles.buttonContainer}
           raised
           icon={{name: 'camera-alt'}}
           title='Take a Photo' />
         <Button
           onPress={() => getFromGalery({getNewPicture, closeModal})}
           buttonStyle={styles.galleryButton}
+          containerViewStyle={styles.buttonContainer}
           raised
           icon={{name: 'insert-photo'}}
           title='Get from Gallery' />
@@ -128,6 +132,10 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     padding: 20
+  },
+  buttonContainer: {
+    overflow: 'hidden',
+    backgroundColor: 'transparent'
   },
   photoButton: {
     backgroundColor: color.third,

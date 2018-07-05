@@ -31,19 +31,21 @@ interface IInputProps {
 
 class AppNavigator extends Component<IInputProps, IInputState>  {
   state = {
-    modalVisible: false,
-    name: '',
-    avatarName: '',
-    avatar: '',
-    loader: false,
-    id: ''
+    modalVisible: false, // switcher to modal photo/gallery
+    name: '', // user name
+    avatarName: '', // avatar name(image)
+    avatar: '', // user avatar
+    loader: false, // switcher to loader
+    id: '' // user id (from server)
   };
 
   componentDidMount() {
+    /* get user info(name, avatar) from server
+     !!! it's bad practice make logic to get info from server inside component, usually I use redux-saga */
     this.loadInfo();
   }
 
-  loadInfo = async () => { // it's bad practice make logic to get info from server inside component, usually I use redux-saga
+  loadInfo = async () => {
     this.setState({ loader: true });
     const querySnapshot = await getUserData();
     const arr = [];
@@ -63,6 +65,7 @@ class AppNavigator extends Component<IInputProps, IInputState>  {
   closeModal = () => this.setState({modalVisible: false});
 
   getNewPicture = async ({preparedImg, name}: {preparedImg: string, name: string}) => {
+    /* function to get new image from user device */
     const { id } = this.state;
     this.setState({ loader: true, avatarName: name, avatar: preparedImg });
                           // it's bad practice make logic to get info from server inside component, usually I use redux-saga
@@ -70,9 +73,9 @@ class AppNavigator extends Component<IInputProps, IInputState>  {
     this.setState({ loader: false });
   }
 
-  onChange = (name: string) => this.setState({name});
+  onChange = (name: string) => this.setState({name}); // change name function
 
-  saveName = () => {
+  saveName = () => { // save name user to server
     const { name, id } = this.state;
     updateNameAndAvatar({ id, name, avatar: '' });
   }
@@ -105,6 +108,7 @@ class AppNavigator extends Component<IInputProps, IInputState>  {
             <Button
               onPress={this.saveName}
               buttonStyle={styles.galleryButton}
+              containerViewStyle={styles.buttonContainer}
               raised
               title='Save Name' />
             <ModalPhotoGallery
@@ -146,11 +150,15 @@ const styles = StyleSheet.create({
     color: color.second
   },
   inputForm: {
-    width: width * 0.8
+    width: width * 0.8,
+    marginBottom: 20
   },
   galleryButton: {
     backgroundColor: color.third,
-    borderRadius: 6,
-    marginTop: 20
+    borderRadius: 6
+  },
+  buttonContainer: {
+    overflow: 'hidden',
+    backgroundColor: 'transparent'
   }
 });

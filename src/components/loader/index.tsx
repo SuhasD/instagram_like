@@ -5,7 +5,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-export const LoaderComponent = () => (
+export const LoaderComponent = () => ( // loader view component
   <View style={[styles.containerLoader, styles.horizontalLoader]}>
     <ActivityIndicator size='large' />
   </View>

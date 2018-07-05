@@ -27,17 +27,19 @@ interface IInputProps {
 
 class AppNavigator extends Component<IInputProps, IInputState> {
   state = {
-    modalVisible: false,
-    loader: false,
-    id: '',
-    imgs: []
+    modalVisible: false, // switcher to modal photo/gallery
+    loader: false, // switcher to loader
+    id: '', // ids images (need to create delete function)
+    imgs: [] // user image collection
   };
 
   componentDidMount() {
+    /* get user image collection from server
+     !!! it's bad practice make logic to get info from server inside component, usually I use redux-saga */
     this.loadInfo();
   }
 
-  loadInfo = async () => { // it's bad practice make logic to get info from server inside component, usually I use redux-saga
+  loadInfo = async () => {
     this.setState({ loader: true });
     const querySnapshot = await getUserImgs();
     const imgs = [];
@@ -50,11 +52,7 @@ class AppNavigator extends Component<IInputProps, IInputState> {
     this.setState({ loader: false, imgs, id });
   }
 
-  addNewPhoto = () => {
-    console.log('new Photo here...');
-  }
-
-  getImgs = (arrImgs: any) => (
+  getImgs = (arrImgs: any) => ( // list of user image
     arrImgs.map(item => (
       <ImageItem
         key={item.imgs.name}
@@ -67,6 +65,7 @@ class AppNavigator extends Component<IInputProps, IInputState> {
   closeModal = () => this.setState({modalVisible: false});
 
   getNewPicture = async ({preparedImg, name}: {preparedImg: string, name: string}) => {
+    /* function to get new image from user device */
     const imgs = {name, src: preparedImg};
     this.setState({ loader: true });
     await updateImageCollection({ imgs });

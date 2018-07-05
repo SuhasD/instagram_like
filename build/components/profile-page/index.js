@@ -24,7 +24,7 @@ class AppNavigator extends Component {
             avatarName: '',
             avatar: '',
             loader: false,
-            id: ''
+            id: '' // user id (from server)
         };
         this.loadInfo = () => __awaiter(this, void 0, void 0, function* () {
             this.setState({ loader: true });
@@ -42,19 +42,22 @@ class AppNavigator extends Component {
         this.openModal = () => this.setState({ modalVisible: true });
         this.closeModal = () => this.setState({ modalVisible: false });
         this.getNewPicture = ({ preparedImg, name }) => __awaiter(this, void 0, void 0, function* () {
+            /* function to get new image from user device */
             const { id } = this.state;
             this.setState({ loader: true, avatarName: name, avatar: preparedImg });
             // it's bad practice make logic to get info from server inside component, usually I use redux-saga
             yield updateNameAndAvatar({ id, avatar: preparedImg, name: '' });
             this.setState({ loader: false });
         });
-        this.onChange = (name) => this.setState({ name });
+        this.onChange = (name) => this.setState({ name }); // change name function
         this.saveName = () => {
             const { name, id } = this.state;
             updateNameAndAvatar({ id, name, avatar: '' });
         };
     }
     componentDidMount() {
+        /* get user info(name, avatar) from server
+         !!! it's bad practice make logic to get info from server inside component, usually I use redux-saga */
         this.loadInfo();
     }
     render() {
@@ -68,7 +71,7 @@ class AppNavigator extends Component {
                     : React.createElement(Text, { style: styles.avatarEmpty },
                         React.createElement(FontAwesome, { name: 'image', size: 250 })),
                 React.createElement(FormInput, { containerStyle: styles.inputForm, value: name, onChangeText: this.onChange }),
-                React.createElement(Button, { onPress: this.saveName, buttonStyle: styles.galleryButton, raised: true, title: 'Save Name' }),
+                React.createElement(Button, { onPress: this.saveName, buttonStyle: styles.galleryButton, containerViewStyle: styles.buttonContainer, raised: true, title: 'Save Name' }),
                 React.createElement(ModalPhotoGallery, { closeModal: this.closeModal, modalVisible: modalVisible, getNewPicture: this.getNewPicture }))));
     }
 }
@@ -97,12 +100,16 @@ const styles = StyleSheet.create({
         color: color.second
     },
     inputForm: {
-        width: width * 0.8
+        width: width * 0.8,
+        marginBottom: 20
     },
     galleryButton: {
         backgroundColor: color.third,
-        borderRadius: 6,
-        marginTop: 20
+        borderRadius: 6
+    },
+    buttonContainer: {
+        overflow: 'hidden',
+        backgroundColor: 'transparent'
     }
 });
 //# sourceMappingURL=index.js.map
